@@ -6,20 +6,37 @@
         <link rel="import" href="bower_components/iron-ajax/iron-ajax.html">
     </head>
 <body>
-
-</body>
+    <dom-module id="show-repositories">
+    <template>
+        Repositories:
+        <template is="dom-repeat" items="[[repos]]">
+            <span>{{item.name}}</span>
+        </template>
+ 
+        <iron-ajax
+            id="requestRepos"
+            url="http://100.108.132.196:8080/muapp/bbva"
+            handle-as="json"
+            on-response="handleResponse">
+        </iron-ajax>
+    </template>
+ 
     <script>
-    $.ajax({ 
-       type : "POST", 
-       url : "https://connect.bbva.com/token?grant_type=client_credentials", 
-       beforeSend: function(xhr){xhr.setRequestHeader('Authorization', 'Basic  YXBwLmJidmEucHJ1ZWJhcG9seTolRmhzbUBsRSRxJW9IS04xalkqV08lYk14NkFzRE9KbkhBdmkzUipUVDhYRzdmemwxZSVNbXZQSDVkQEJUZjQ4');},
-       success : function(result) { 
-           //set your variable to the result 
-       }, 
-       error : function(result) { 
-         //handle the error 
-       } 
-     }); 
+        Polymer({
+            is: 'show-repositories',
+            properties: {
+                repos: {
+                    type: Array
+                }
+            },
+            ready: function () {
+                this.$.requestRepos.generateRequest();
+            },
+            handleResponse: function (data) {
+                this.repos = data.detail.response;
+            }
+        });
     </script>
-    
+</dom-module>
+</body>    
 </html>
