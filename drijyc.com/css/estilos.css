@@ -1,0 +1,56 @@
+/*Header hide space*/
+.navbar{
+	/*margin-bottom: 0;*/
+	background: #262626;
+}
+.jumbotron-ss{
+	background: #527dff;
+	color: #fff;
+	padding: 50px 0px;
+}
+.color-black{
+	background: #262626;
+}
+.color-purple{
+	background: #527dff;
+}
+.jumbotron .titulo-ss{
+	font-size: 50px;
+	font-family: 'Raleway', sans-serif;
+}
+.fontstyle-text{
+	font-family: 'Raleway', sans-serif;
+}
+.img-type{
+	width: 100%;
+	/*width: 300px;
+	height: 300px;*/
+}
+/*Post section*/
+.main{
+	margin-top: 20px;
+	margin-bottom: 20px;
+}
+.post{
+	padding-bottom: 20px;
+	margin-bottom: 20px;
+	border-bottom: 1px solid #999;
+}
+.post .post-title a{
+	color: #262626;
+}
+.post .thumb{
+	margin-right: 10px;
+	width: 40%;
+}
+.post .contenedor-botones{
+	width: 100%;
+}
+/*Media QUERY para las img*/
+@media screen and (max-width: 768px) {
+	.post .thumb{
+		width: 90%;
+		margin-bottom: 20px;
+		margin-right: 0px;
+	}
+}

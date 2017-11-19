@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+<!-- Latest compiled and minified CSS -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+	<link rel="stylesheet" href="css/estilos.css" >
+	<link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet">
+    <link rel="import" href="bower_components/polymer/polymer.html">
+    <link rel="import" href="bower_components/iron-ajax/iron-ajax.html">
+    <script src="https://www.gstatic.com/firebasejs/3.4.1/firebase.js"></script>
+    <script>
+      // Initialize Firebase
+      var config = {
+        //apiKey: "AIzaSyBMJAKqWQfThr-vhqk6NOrWTqWyVIiqHgg",
+        //authDomain: "drijyc.firebaseapp.com",
+        //databaseURL: "https://drijyc.firebaseio.com",
+        //storageBucket: "drijyc.appspot.com",
+        //messagingSenderId: "1019626814259"
+        apiKey: "AIzaSyBMJAKqWQfThr-vhqk6NOrWTqWyVIiqHgg",
+        authDomain: "drijyc.firebaseapp.com",
+        databaseURL: "https://drijyc.firebaseio.com",
+        projectId: "drijyc",
+        storageBucket: "drijyc.appspot.com",
+        messagingSenderId: "1019626814259"
+          
+      };
+      firebase.initializeApp(config);
+        var provider = new firebase.auth.FacebookAuthProvider();
+        firebase.auth().signInWithPopup(provider).then(function(result) {
+          // This gives you a Facebook Access Token. You can use it to access the Facebook API.
+          var token = result.credential.accessToken;
+          // The signed-in user info.
+          var user = result.user;
+            console.log(user);
+          // ...
+        }).catch(function(error) {
+          // Handle Errors here.
+          var errorCode = error.code;
+          var errorMessage = error.message;
+          // The email of the user's account used.
+          var email = error.email;
+            console.log(errorMessage);
+          // The firebase.auth.AuthCredential type that was used.
+          var credential = error.credential;
+          // ...
+        });
+        
+        // Get a reference to the database service
+        var database = firebase.database();
+        //database.ref("clanes").set({
+            //xdata:"101101110101011101010101110101"
+        //});
+        database.ref('clanes').on('value', function(snapshot){
+            var values=snapshot.val();
+            console.log(snapshot.val());
+        });
+        database.ref('usuarios').on('value', function(snapshot){
+            var values=snapshot.val();
+            console.log(snapshot.val());
+        });
+        database.ref('invitaciones').on('value', function(snapshot){
+            var values=snapshot.val();
+            console.log(snapshot.val());
+        });
+        
+        //database.ref('metadata').set(
+        //{
+            //webname: 'DRIJYC',
+            //webversion: '1.0',
+            //webuser: 'luis fernando hernández méndez',
+            //webslogan: 'Software Desing'
+        //});
+        database.ref('metadata').on('value', function(snapshot){
+            var values=snapshot.val();
+            console.log(snapshot.val());
+            document.getElementById('webtitle').textContent=values.webname;
+            document.getElementById('webslogan').textContent=values.webslogan;
+            document.getElementById('webusername').textContent=values.webuser;
+        });
+        database.ref('postimg').on('value', function(snapshot){
+            var values=snapshot.val();
+            console.log(snapshot.val());
+            $("#img1").attr("src",values.url1);
+            $("#img2").attr("src",values.url2);
+            $("#img3").attr("src",values.url3);
+            $("#img4").attr("src",values.url4);
+        });
+        database.ref('postdata').on('value', function(snapshot){
+            var values=snapshot.val();
+            console.log(snapshot.val());
+            //---Fist Article
+            $("#posttitle1").append(values.posttitle1);
+            $("#posttitle1").text(values.posttitle1);
+            $("#postdate1").append(values.postdate1);
+            $("#postdate1").text(values.postdate1);
+            $("#postusername1").append(values.postusername1);
+            $("#postusername1").text(values.postusername1);
+            $("#postdesc1").append(values.posttitle1);
+            $("#postdesc1").text(values.postdesc1);
+            //---Fist Article
+            $("#posttitle2").append(values.posttitle2);
+            $("#posttitle2").text(values.posttitle2);
+            $("#postdate2").append(values.postdate2);
+            $("#postdate2").text(values.postdate2);
+            $("#postusername2").append(values.postusername2);
+            $("#postusername2").text(values.postusername2);
+            $("#postdesc2").append(values.posttitle2);
+            $("#postdesc2").text(values.postdesc2);
+            //---Fist Article
+            $("#posttitle3").append(values.posttitle3);
+            $("#posttitle3").text(values.posttitle3);
+            $("#postdate3").append(values.postdate3);
+            $("#postdate3").text(values.postdate3);
+            $("#postusername3").append(values.postusername3);
+            $("#postusername3").text(values.postusername3);
+            $("#postdesc3").append(values.posttitle3);
+            $("#postdesc3").text(values.postdesc3);
+            //---Fist Article
+            $("#posttitle4").append(values.posttitle4);
+            $("#posttitle4").text(values.posttitle4);
+            $("#postdate4").append(values.postdate4);
+            $("#postdate4").text(values.postdate4);
+            $("#postusername4").append(values.postusername4);
+            $("#postusername4").text(values.postusername4);
+            $("#postdesc4").append(values.posttitle4);
+            $("#postdesc4").text(values.postdesc4);
+            //----------Recent result
+            $("#restTitle2").append(values.posttitle1);
+            $("#restTitle2").text(values.posttitle1);
+            $("#restCont2").append(values.postdesc1);
+            $("#restCont2").text(values.postdesc1);
+            
+            $("#restTitle1").append(values.posttitle2);
+            $("#restTitle1").text(values.posttitle2);
+            $("#restCont1").append(values.postdesc2);
+            $("#restCont1").text(values.postdesc2);
+            
+            $("#restTitle3").append(values.posttitle3);
+            $("#restTitle3").text(values.posttitle3);
+            $("#restCont3").append(values.postdesc3);
+            $("#restCont3").text(values.postdesc3);
+        });
+        database.ref('postsection').on('value', function(snapshot){
+            var values=snapshot.val();
+            console.log(snapshot.val());
+            $("#cat1").append(values.cat1);$("#cat1").text(values.cat1);
+            $("#cat1-1").append(values.cat1);$("#cat1-1").text(values.cat1);
+            
+            $("#cat2").append(values.cat1);$("#cat2").text(values.cat2);
+            $("#cat2-2").append(values.cat1);$("#cat2-2").text(values.cat2);
+            
+            $("#cat3").append(values.cat1);$("#cat3").text(values.cat3);
+            $("#cat3-3").append(values.cat1);$("#cat3-3").text(values.cat3);
+            
+            $("#cat4").append(values.cat1);$("#cat4").text(values.cat4);
+            $("#cat4-4").append(values.cat1);$("#cat4-4").text(values.cat4);
+            
+            $("#cat5").append(values.cat1);$("#cat5").text(values.cat5);
+            $("#cat5-5").append(values.cat1);$("#cat5-5").text(values.cat5);
+            
+            $("#cat6").append(values.cat1);$("#cat6").text(values.cat6);
+            $("#cat6-6").append(values.cat1);$("#cat6-6").text(values.cat6);
+            
+            $("#cat7").append(values.cat1);$("#cat7").text(values.cat7);
+            $("#cat7-7").append(values.cat1);$("#cat7-7").text(values.cat7);
+            
+            $("#cat8").append(values.cat1);$("#cat8").text(values.cat8);
+            $("#cat8-8").append(values.cat1);$("#cat8-8").text(values.cat8);
+        });
+    </script>
+	<title>Studio S</title>
+</head>
+<body>
+	<header>
+		<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+			<div class="container">
+				<div class="navbar-header">
+					<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navegacion-ss">
+						<span class="sr-only">Deplegar / Ocultar Menu</span>
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+					</button>
+					<a href="#" class="navbar-brand">Arrow</a>
+				</div>
+<!-- Inicia Menu -->
+				<div class="collapse navbar-collapse" id="navegacion-ss">
+					<ul class="nav navbar-nav">
+						<li class="active">
+<!-- Mandar a inicio -->
+							<a href="#">Inicio</a>
+						</li>
+						<li  class="dropdown">
+<!-- Mandar a inicio -->
+							<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button">
+								Categorias <span class="caret"></span>
+							</a>
+							<ul class="dropdown-menu" role="menu">
+								<li  ><a href="#" id="cat1">Categoria 1</a></li>
+								<li  class="divider"></li>
+								<li  ><a href="#" id="cat2">Categoria 2</a></li>
+								<li  ><a href="#" id="cat3">Categoria 3</a></li>
+								<li  ><a href="#" id="cat4">Categoria 4</a></li>
+                                <li  ><a href="#" id="cat5">Categoria 5</a></li>
+                                <li  ><a href="#" id="cat6">Categoria 6</a></li>
+                                <li  ><a href="#" id="cat7">Categoria 7</a></li>
+                                <li  ><a href="#" id="cat8">Categoria 8</a></li>
+							</ul>
+						</li>
+                        <li  ><a href="#">Contacto</a></li>
+						<li  ><a href="#">Ayuda</a></li>						
+					</ul>
+<!-- Barra de busqueda -->
+					<form action="" class="navbar-form navbar-right" role="search">
+						<div class="form-group">
+							<input type="text" class=" form-control" placeholder="Buscar">
+						</div>
+						<button type="submit" class="btn btn-primary color-purple">
+							<span class="glyphicon glyphicon-search"></span>
+						</button>
+					</form>
+				</div>
+			</div>
+		</nav>
+	</header>	
+<!-- Aqui va el jumbotron -->
+	<section class="jumbotron jumbotron-ss">
+		<div class="container">
+			<h1 class="titulo-ss" id="webtitle">Studio S</h1>
+			<p class="fontstyle-text" id="webslogan">Software Desing</p>
+		</div>
+	</section>
+<!-- Contenido principal -->
+	<section class="main container">
+		<div class="row">
+			<section class="posts col-md-9">
+				<div class="direct">
+<!-- Dirección completa de menus -->
+					<ol class="breadcrumb color-black">
+						<li class="active">Inicio</li>
+						<li><a href="#">Categorias</a></li>
+						<li><a href="#">Contacto</a></li>
+					</ol>
+				</div>
+
+				<article class="post clearfix">
+					<a href="#" class="thumb pull-left">
+						<img id="img1" class="img-type img-thumbnail" src="images/studios.png" alt="Imagen Studios S">
+					</a>
+					<h2 class="post-title">
+						<a href="#" id="posttitle1">Somo una empresa apasionada con el desarrollo de software.</a>
+					</h2>
+					<p><span class="post-fecha" id="postdate1">Publicado el 8 de octubre 2016</span> por <span class="post-autor">
+						<a href="#" id="postusername1">Luis Fernando Hernández Méndez</a>
+					</span></p>
+					<p class="post-contenido text-justify" id="postdesc1"> Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eius iusto fugiat ipsa et, reiciendis autem enim sunt sint unde laboriosam reprehenderit provident nobis quo consequatur incidunt, aspernatur. Temporibus hic, obcaecati.</p>
+					<div class="contenedor-btn">
+						<a href="#" class="btn btn-primary color-purple">Leer más</a>
+						<a href="#" class="btn btn-success">Credito  <span class="badge">$200</span></a>
+					</div>
+				</article>
+
+				<article class="post clearfix">
+					<a href="#" class="thumb pull-left">
+						<img id="img2"  class="img-type img-thumbnail" src="images/favicon.png" alt="Imagen Studios S">
+					</a>
+					<h2 class="post-title">
+						<a href="#" id="posttitle2">Somo una empresa apasionada con el desarrollo de software.</a>
+					</h2>
+					<p><span class="post-fecha" id="postdate2">Publicado el 8 de octubre 2016</span> por <span class="post-autor">
+						<a href="#" id="postusername2">David Camargo Azuara</a>
+					</span></p>
+					<p class="post-contenido text-justify" id="postdesc2"> Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eius iusto fugiat ipsa et, reiciendis autem enim sunt sint unde laboriosam reprehenderit provident nobis quo consequatur incidunt, aspernatur. Temporibus hic, obcaecati.</p>
+					<div class="contenedor-btn">
+						<a href="#" class="btn btn-primary color-purple">Leer más</a>
+						<a href="#" class="btn btn-success">Credito <span class="badge">$3500</span></a>
+					</div>
+				</article>
+
+				<article class="post clearfix">
+					<a href="#" class="thumb pull-left">
+						<img id="img3" class="img-type img-thumbnail" src="images/return.png" alt="Imagen Studios S">
+					</a>
+					<h2 class="post-title">
+						<a href="#" id="posttitle3">Somo una empresa apasionada con el desarrollo de software.</a>
+					</h2>
+					<p><span class="post-fecha" id="postdate3">Publicado el 8 de octubre 2016</span> por <span class="post-autor">
+						<a href="#" id="postusername3">Ian Vadim Silva Villegas</a>
+					</span></p>
+					<p class="post-contenido text-justify" id="postdesc3"> Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eius iusto fugiat ipsa et, reiciendis autem enim sunt sint unde laboriosam reprehenderit provident nobis quo consequatur incidunt, aspernatur. Temporibus hic, obcaecati.</p>
+					<div class="contenedor-btn">
+						<a href="#" class="btn btn-primary color-purple">Leer más</a>
+						<a href="#" class="btn btn-success">Credito <span class="badge">$4000</span></a>
+					</div>
+				</article>
+                
+                <article class="post clearfix">
+					<a href="#" class="thumb pull-left">
+						<img id="img4" class="img-type img-thumbnail" src="images/return.png" alt="Imagen Studios S">
+					</a>
+					<h2 class="post-title">
+						<a href="#" id="posttitle4">Somo una empresa apasionada con el desarrollo de software.</a>
+					</h2>
+					<p><span class="post-fecha" id="postdate4">Publicado el 8 de octubre 2016</span> por <span class="post-autor">
+						<a href="#" id="postusername4">Tinia Méndez Colín</a>
+					</span></p>
+					<p class="post-contenido text-justify" id="postdesc4"> Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eius iusto fugiat ipsa et, reiciendis autem enim sunt sint unde laboriosam reprehenderit provident nobis quo consequatur incidunt, aspernatur. Temporibus hic, obcaecati.</p>
+					<div class="contenedor-btn">
+						<a href="#" class="btn btn-primary color-purple">Leer más</a>
+						<a href="#" class="btn btn-success">Credito <span class="badge">$100</span></a>
+					</div>
+				</article>
+<!-- Pagination -->
+			<nav>
+				<div class="center-block">
+					<ul class="pagination">
+						<li class="disabled">
+							<a href="#">&laquo;<span class="sr-only">Anterior</span></a>
+						</li>
+						<li class="active"><a href="#">1</a></li>
+						<li ><a href="#">2</a></li>
+						<li ><a href="#">3</a></li>
+						<li ><a href="#">4</a></li>
+						<li >
+							<a href="#">&raquo;<span class="sr-only">Siguente</span></a>
+						</li>
+					</ul>
+				</div>
+			</nav>
+			</section>
+<!-- Menu derecho -->
+			<aside class="col-md-3 hidden-xs hidden-sm">
+				<h4>Categorias</h4>
+				<div class="list-group">
+					<a href="#" id="cat1-1" class="list-group-item active">Categoria 0</a>
+					<a href="#" id="cat2-2" class="list-group-item">Categoria 1</a>
+					<a href="#" id="cat3-3" class="list-group-item">Categoria 2</a>
+					<a href="#" id="cat4-4" class="list-group-item">Categoria 3</a>
+					<a href="#" id="cat5-5" class="list-group-item">Categoria 4</a>
+					<a href="#" id="cat6-6" class="list-group-item">Categoria 5</a>
+					<a href="#" id="cat7-7" class="list-group-item">Categoria 6</a>
+					<a href="#" id="cat8-8" class="list-group-item">Categoria 7</a>
+				</div>
+				<h4>Momos Recientes</h4>
+				<a href="#" class="list-group-item">
+					<h4 id="restTitle1" class="list-group-item-heading">Lorem ipsum dolor sit amet, consectetur adipisicing elit.</h4>
+					<p id="restCont1" class="list-group-item-text"> Lorem ipsum dolor sit amet, consectetur adipisicing elit. Inventore cum odit soluta porro tempora aspernatur quo praesentium quia aliquam distinctio libero possimus impedit reiciendis perspiciatis vitae, illum! Soluta, quidem, nam.</p>
+				</a>
+				<a href="#" class="list-group-item">
+					<h4 id="restTitle2" class="list-group-item-heading">Lorem ipsum dolor sit amet, consectetur adipisicing elit.</h4>
+					<p id="restCont2" class="list-group-item-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sequi dolorem praesentium hic reiciendis. Esse incidunt nulla voluptas molestias at corporis quae totam voluptatum sint ducimus aut sed aspernatur aliquam, sunt.</p>
+				</a>
+				<a href="#" class="list-group-item">
+					<h4 id="restTitle3" class="list-group-item-heading">Lorem ipsum dolor sit amet, consectetur adipisicing elit.</h4>
+					<p id="restCont3" class="list-group-item-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Illo dolores soluta doloremque facilis voluptas culpa, ipsam, vel quisquam velit natus eveniet dignissimos, a nemo. Repudiandae quidem, quas voluptatum! Distinctio, quod.</p>
+				</a>
+			</aside>
+		</div>
+	</section>
+<!-- Pie de pagina -->
+	<footer>
+		<div class="container">
+			<div class="row">
+				<div class="col-vs-6">
+					<p id="webusername">Luis Fernando Hernández Méndez - Studio S</p>
+				</div>
+				<div class="col-vs-6">
+					<ul class="list-inline text-right">
+						<li><a href="#">Inicio</a></li>
+						<li><a href="#">Siguenos</a></li>
+						<li><a href="#">Descargas</a></li>
+						<li><a href="#">Contacto</a></li>
+					</ul>
+				</div>
+			</div>
+		</div>
+	</footer>
+	<script type="text/javascript" src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+	<!-- Latest compiled and minified JavaScript -->
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+    <dom-module id="show-repositories">
+    <template>
+        Repositories:
+        <template is="dom-repeat" items="[[repos]]">
+            <span>{{item.name}}</span>
+        </template>
+ 
+        <iron-ajax
+            id="requestRepos"
+            url="http://100.108.132.196:8080/muapp/bbva"
+            handle-as="json"
+            on-response="handleResponse">
+        </iron-ajax>
+    </template>
+ 
+    <script>
+        Polymer({
+            is: 'show-repositories',
+            properties: {
+                repos: {
+                    type: Array
+                }
+            },
+            ready: function () {
+                this.$.requestRepos.generateRequest();
+            },
+            handleResponse: function (data) {
+                this.repos = data.detail.response;
+            }
+        });
+    </script>
+</dom-module>
+</body>
+</html>
