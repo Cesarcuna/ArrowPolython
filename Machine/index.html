@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+     <head>
+         <meta charset="UTF-8">
+        <link rel="import" href="bower_components/polymer/polymer.html">
+        <link rel="import" href="bower_components/iron-ajax/iron-ajax.html">
+    </head>
+<body>
+
+</body>
+    <script>
+    $.ajax({ 
+       type : "POST", 
+       url : "https://connect.bbva.com/token?grant_type=client_credentials", 
+       beforeSend: function(xhr){xhr.setRequestHeader('Authorization', 'Basic  YXBwLmJidmEucHJ1ZWJhcG9seTolRmhzbUBsRSRxJW9IS04xalkqV08lYk14NkFzRE9KbkhBdmkzUipUVDhYRzdmemwxZSVNbXZQSDVkQEJUZjQ4');},
+       success : function(result) { 
+           //set your variable to the result 
+       }, 
+       error : function(result) { 
+         //handle the error 
+       } 
+     }); 
+    </script>
+    
+</html>

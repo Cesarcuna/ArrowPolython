@@ -1,0 +1,24 @@
+<dom id="custom-card">
+	<link rel="stylesheet" type="text/css" href="custom-card.css">
+	<template>
+		<div>
+			<span>{{nombre}}</span>
+			<span>{{edad}}</span>
+		</div>
+	</template>
+<dom >
+
+<script>
+	Polymer({
+		is:'custom-card',
+		properties:{
+			nombre: String,
+			edad: Number
+		},
+		ready: function(){
+			console.log("custom-card ready");
+			this.nombre = "Roberto"
+			this.edad=18;
+		}
+	});
+</script>
